@@ -4,10 +4,19 @@ import { StatusBar } from 'expo-status-bar';
 import { Container, Header, TotalCars, HeaderContent } from "./styles";
 
 import Logo from '../../assets/logo.svg';
+import { RFValue} from 'react-native-responsive-fontsize';
 
+import { Car } from '../../components/Car';
 
-import { Container, Title } from "./styles";
-
+const carOne = {
+  brand: 'audi',
+  name: 'R$ 5 coupé',
+  rent: {
+    period: 'AO DIA',
+    price: 120
+  },
+  thumbnail: ''
+}
 
 export function Home() {
   return (
@@ -16,7 +25,7 @@ export function Home() {
       <StatusBar style='light' translucent backgroundColor='transparent'/>
       <Header>
         <HeaderContent>
-        <Logo  />
+        <Logo width={RFValue(108)} height={RFValue(12)}  />
 
         <TotalCars>
           Total de 12 carros
@@ -24,7 +33,7 @@ export function Home() {
         </HeaderContent>
       </Header>
 
-      <Title>Home</Title>
+      <Car data={carOne} />
 
     </Container>
   );
