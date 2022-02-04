@@ -15,7 +15,7 @@ const carOne = {
     period: 'AO DIA',
     price: 120
   },
-  thumbnail: ''
+  thumbnail: 'https://image.webmotors.com.br/_fotos/AnuncioUsados/gigante/2022/202201/20220126/audi-a8-6.3-fsi-longo-w12-48v-gasolina-4p-tiptronic-wmimagem09445290484.png'
 }
 
 export function Home() {
