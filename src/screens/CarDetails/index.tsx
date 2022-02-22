@@ -2,7 +2,20 @@ import React from "react";
 import { BackButton } from "../../components/BackButton";
 import { ImageSlider } from "../../components/ImageSlider";
 
-import { Container, Header, CarImages } from "./styles";
+import {
+  Container,
+  Header,
+  CarImages,
+  Content,
+  Details,
+  Description,
+  Brand,
+  Name,
+  Rent,
+  Period,
+  Price,
+  About
+} from "./styles";
 
 export function CarDetails() {
   return (
@@ -17,6 +30,20 @@ export function CarDetails() {
           ]}
         />
       </CarImages>
+
+      <Content>
+        <Details>
+          <Description>
+            <Brand></Brand>
+            <Name></Name>
+          </Description>
+          <Rent>
+            <Period></Period>
+            <Price></Price>
+          </Rent>
+        </Details>
+        <About>Este é automóvel desportivo. Surgiu do lendário touro de lide indultado na praça Real Maestranza de Sevilla. É um belíssimo carro para quem gosta de acelerar.</About>
+      </Content>
     </Container>
   );
 }
