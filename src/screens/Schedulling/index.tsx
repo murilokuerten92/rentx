@@ -16,9 +16,16 @@ import {
 } from "./styles";
 import ArrowSvg from "../../assets/arrow.svg";
 import { StatusBar } from "expo-status-bar";
+import { useNavigation } from '@react-navigation/native';
 
 export function Schedulling() {
   const theme = useTheme();
+
+  const { navigate } = useNavigation();
+
+  function handleConfirmRental(){
+     navigate('SchedulingDetails' as never);
+  }
 
   return (
     <Container>
@@ -51,7 +58,7 @@ export function Schedulling() {
       </Content>
 
       <Footer>
-        <Button title="Confirmar" onPress={() => {}} />
+        <Button title="Confirmar" onPress={handleConfirmRental} />
       </Footer>
     </Container>
   );

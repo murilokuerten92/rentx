@@ -1,4 +1,4 @@
-import { StatusBar } from "expo-status-bar";
+
 import React from "react";
 import {
   useFonts,
@@ -14,9 +14,8 @@ import AppLoading from "expo-app-loading";
 
 import { ThemeProvider } from "styled-components";
 
-import { Home } from "./src/screens/Home";
 import theme from "./src/styles/theme";
-import { CarDetails } from "./src/screens/CarDetails";
+import { Routes } from "./src/routes/index";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -33,8 +32,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      {/* <Home /> */}
-      <CarDetails />
+      <Routes />
     </ThemeProvider>
   );
 }

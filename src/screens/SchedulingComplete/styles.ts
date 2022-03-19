@@ -12,13 +12,13 @@ export const Content = styled.View`
   flex: 1;
   justify-content: center;
   
-  padding-bottom: 80px;
   align-items: center;
+
 `;
 
 export const Title = styled.Text`
   font-size: ${RFValue(30)}px;
-  background-color: ${({ theme }) => theme.colors.shape};
+color: ${({ theme }) => theme.colors.shape};
   font-family: ${({ theme }) => theme.fonts.secondary_600};
 
   margin-top: 40px;
@@ -26,7 +26,7 @@ export const Title = styled.Text`
 
 export const Message = styled.Text`
   font-size: ${RFValue(15)}px;
-  background-color: ${({ theme }) => theme.colors.text_detail};
+  color: ${({ theme }) => theme.colors.text_detail};
   font-family: ${({ theme }) => theme.fonts.primary_400};
   text-align: center;
   line-height: ${RFValue(25)}px;

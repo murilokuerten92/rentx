@@ -12,7 +12,7 @@ export function Acessory({ name, icon: Icon }: Props) {
     <Container>
       <Icon width={32} height={32} />
 
-      <Name></Name>
+      <Name>{name}</Name>
     </Container>
   );
 }
