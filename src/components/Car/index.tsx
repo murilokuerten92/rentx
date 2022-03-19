@@ -1,26 +1,39 @@
 import React from "react";
 
-import { Container, Details, Brand, Name, About, Rent, Period, Price, Type, CardImage } from "./styles";
+import {
+  Container,
+  Details,
+  Brand,
+  Name,
+  About,
+  Rent,
+  Period,
+  Price,
+  Type,
+  CardImage,
+} from "./styles";
 
 import GasolineSvg from "../../assets/gasoline.svg";
 
+import { RectButtonProps } from "react-native-gesture-handler";
 interface CarData {
-    brand: string;
-    name: string;
-    rent: {
-        period: string;
-        price: number;
-    },
-    thumbnail: string;
+  brand: string;
+  name: string;
+  rent: {
+    period: string;
+    price: number;
+  };
+  thumbnail: string;
 }
 
-interface Props {
-   data: CarData
+interface Props  {
+  data: CarData;
+  onPress: () => void;
 }
 
-export function Car({data}: Props) {
+export function Car({ data, ...rest }: Props) {
   return (
-    <Container>
+    <Container {...rest}>
       <Details>
         <Brand>{data.brand}</Brand>
         <Name>{data.name}</Name>
@@ -36,7 +49,7 @@ export function Car({data}: Props) {
         </About>
       </Details>
 
-      <CardImage source={{ uri: data.thumbnail }} resizeMode='contain' />
+      <CardImage source={{ uri: data.thumbnail }} resizeMode="contain" />
     </Container>
   );
 }

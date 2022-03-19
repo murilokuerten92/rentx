@@ -1,19 +1,18 @@
-import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
+
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
-
-interface ButtonProps extends RectButtonProps {
+interface ButtonProps {
     color?: string;
 }
 
-export const Container = styled(RectButton)<ButtonProps>`
+export const Container = styled.TouchableOpacity<ButtonProps>`
   width: 100%;
 
   padding: 19px;
   align-items: center;
   justify-content: center;
 
-  background-color: ${({ color, theme }) => color ? color : theme.colors.main};
+  background-color: ${({ color }) => color };
 `;
 
 export const Title = styled.Text`

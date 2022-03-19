@@ -8,12 +8,23 @@ import DoneSvg from "../../assets/done.svg";
 
 import { Container, Content, Title, Message, Footer } from "./styles";
 import { ConfirmButton } from "../../components/ConfirmButton";
+import { StatusBar } from "expo-status-bar";
+
+import { useNavigation } from "@react-navigation/native";
 
 export function SchedulingComplete() {
   const { width } = useWindowDimensions();
 
+  const { navigate } = useNavigation();
+
+  function handleConfirm() {
+    navigate("Home" as never);
+  }
+
+
   return (
     <Container>
+      <StatusBar style='light' translucent backgroundColor='transparent' />
       <LogoSvg width={width} />
 
      
@@ -28,7 +39,7 @@ export function SchedulingComplete() {
       </Content>
 
       <Footer>
-          <ConfirmButton title='OK' />
+          <ConfirmButton title='OK' onPress={handleConfirm} />
       </Footer>
     </Container>
   );
