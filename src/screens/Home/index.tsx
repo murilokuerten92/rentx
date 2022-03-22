@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { StatusBar } from "expo-status-bar";
 import { Container, Header, TotalCars, HeaderContent, CarList } from "./styles";
@@ -8,6 +8,10 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 import { Car } from "../../components/Car";
 import { useNavigation } from "@react-navigation/native";
+
+import api from "../../services/api";
+import { CarDTO } from "../../dtos/CarDTO";
+
 const carOne = {
   brand: "audi",
   name: "R$ 5 coupé",
@@ -20,10 +24,28 @@ const carOne = {
 };
 
 export function Home() {
+  const [cars, setCars] = useState<CarDTO[]>([]);
+  const [loading, setLoading] = useState(true);
   const { navigate } = useNavigation();
 
+  useEffect(() => {
+    async function fetchCars() {
+      try {
+        const response = await api.get("cars");
+
+        setCars(response.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchCars();
+  }, []);
+
   function handleCarDetails() {
-    navigate('CarDetails' as never, {} as never);
+    navigate("CarDetails" as never, {} as never);
   }
 
   return (
@@ -38,10 +60,10 @@ export function Home() {
       </Header>
 
       <CarList
-        data={[1, 2, 3, 4, 5, 6, 7]}
-        keyExtractor={(item) => String(item)}
-        renderItem={({ item }) => (
-          <Car data={carOne} onPress={handleCarDetails} />
+        data={cars}
+        keyExtractor={(item: CarDTO) => item.id}
+        renderItem={(item: CarDTO) => (
+          <Car data={item} onPress={handleCarDetails} />
         )}
       />
     </Container>
