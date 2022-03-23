@@ -17,16 +17,24 @@ import GasolineSvg from "../../assets/gasoline.svg";
 
 import { RectButtonProps } from "react-native-gesture-handler";
 interface CarData {
+  id: string;
   brand: string;
   name: string;
+  about: string;
   rent: {
-    period: string;
-    price: number;
-  };
+      period: string;
+      price: number;
+  },
+  fuel_type: string;
   thumbnail: string;
+  accessories: {
+      type: string;
+      name: string;
+  }[];
+  photos: string[];
 }
 
-interface Props  {
+interface Props {
   data: CarData;
   onPress: () => void;
 }

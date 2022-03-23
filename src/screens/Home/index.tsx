@@ -60,6 +60,7 @@ export function Home() {
       </Header>
 
       <CarList
+        //@ts-ignore
         data={cars}
         keyExtractor={(item: CarDTO) => item.id}
         renderItem={(item: CarDTO) => (
