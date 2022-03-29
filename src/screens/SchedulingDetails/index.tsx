@@ -1,5 +1,5 @@
 import React from "react";
-import { Acessory } from "../../components/Acessory";
+import { Accessory } from "../../components/Accessory";
 import { BackButton } from "../../components/BackButton";
 import { ImageSlider } from "../../components/ImageSlider";
 import { Feather } from "@expo/vector-icons";
@@ -74,12 +74,8 @@ export function SchedulingDetails() {
           </Rent>
         </Details>
         <Acessories>
-          <Acessory name="380Km/h" icon={speedSvg} />
-          <Acessory name="3.2s" icon={acceleationSvg} />
-          <Acessory name="800 HP" icon={forceSvg} />
-          <Acessory name="Gasolina" icon={gasolineSvg} />
-          <Acessory name="Auto" icon={exchangeSvg} />
-          <Acessory name="2 pessoas" icon={peopleSvg} />
+          <Accessory name="380Km/h" icon={speedSvg} />
+
         </Acessories>
         <RentalPeriod>
           <CalendarIcon>

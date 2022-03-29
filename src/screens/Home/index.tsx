@@ -10,16 +10,22 @@ import { FlatList } from "react-native";
 
 import { Car } from "../../components/Car";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import api from "../../services/api";
 import { CarDTO } from "../../dtos/CarDTO";
 
 import { Load } from "../../components/Load";
 
+export type RootStackParamList = {
+  CarDetails: { car: CarDTO };
+};
+
 export function Home() {
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [loading, setLoading] = useState(true);
-  const { navigate } = useNavigation();
+  const { navigate } =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   useEffect(() => {
     async function fetchCars() {
@@ -37,8 +43,10 @@ export function Home() {
     fetchCars();
   }, []);
 
-  function handleCarDetails() {
-    navigate("CarDetails" as never, {} as never);
+  function handleCarDetails(car: CarDTO) {
+    navigate("CarDetails", {
+      car,
+    });
   }
 
   return (
@@ -59,7 +67,7 @@ export function Home() {
           data={cars}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <Car data={item} onPress={handleCarDetails} />
+            <Car data={item} onPress={() => handleCarDetails(item)} />
           )}
           contentContainerStyle={{
             padding: 24,
