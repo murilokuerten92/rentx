@@ -8,7 +8,9 @@ interface Props  {
     name: string;
   }
 
-export const Container = styled(BorderlessButton)`
+export const Container = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.8
+})`
  
 `;
 

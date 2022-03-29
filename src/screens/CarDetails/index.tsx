@@ -1,5 +1,5 @@
 import React from "react";
-import { Acessory } from "../../components/Acessory";
+import { Accessory } from "../../components/Accessory";
 import { BackButton } from "../../components/BackButton";
 import { ImageSlider } from "../../components/ImageSlider";
 
@@ -9,7 +9,7 @@ import forceSvg from "../../assets/force.svg";
 import gasolineSvg from "../../assets/gasoline.svg";
 import exchangeSvg from "../../assets/exchange.svg";
 import peopleSvg from "../../assets/people.svg";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   Container,
   Header,
@@ -23,59 +23,69 @@ import {
   Period,
   Price,
   About,
-  Acessories,
-  Footer
+  Accessories,
+  Footer,
 } from "./styles";
 import { Button } from "../../components/Button";
+import { CarDTO } from "../../dtos/CarDTO";
+
+interface Params {
+  car: CarDTO;
+}
 
 export function CarDetails() {
+  const { navigate, goBack } = useNavigation();
 
-  const { navigate } = useNavigation();
+  const route = useRoute();
 
-  function handleConfirmRental(){
-     navigate('Schedulling' as never);
+  const { car } = route.params as Params;
+
+  function handleConfirmRental() {
+    navigate("Schedulling" as never);
+  }
+
+  function handleBack() {
+    goBack();
   }
 
   return (
     <Container>
       <Header>
-        <BackButton onPress={() => {}} />
+        <BackButton onPress={() => handleBack()} />
       </Header>
       <CarImages>
         <ImageSlider
-          imagesUrl={[
-            "https://image.webmotors.com.br/_fotos/AnuncioUsados/gigante/2022/202201/20220126/audi-a8-6.3-fsi-longo-w12-48v-gasolina-4p-tiptronic-wmimagem09445290484.png",
-          ]}
+          imagesUrl={car.photos}
         />
       </CarImages>
 
       <Content>
         <Details>
           <Description>
-            <Brand></Brand>
-            <Name></Name>
+            <Brand>{car.brand}</Brand>
+            <Name>{car.name}</Name>
           </Description>
           <Rent>
-            <Period></Period>
-            <Price></Price>
+            <Period>{car.rent.period}</Period>
+            <Price>{car.rent.price}</Price>
           </Rent>
         </Details>
-        <Acessories>
-          <Acessory name="380Km/h" icon={speedSvg} />
-          <Acessory name="3.2s" icon={acceleationSvg} />
-          <Acessory name="800 HP" icon={forceSvg} />
-          <Acessory name="Gasolina" icon={gasolineSvg} />
-          <Acessory name="Auto" icon={exchangeSvg} />
-          <Acessory name="2 pessoas" icon={peopleSvg} />
-        </Acessories>
-        <About>
-          Este é automóvel desportivo. Surgiu do lendário touro de lide
-          indultado na praça Real Maestranza de Sevilla. É um belíssimo carro
-          para quem gosta de acelerar.
-        </About>
+        <Accessories>
+          {car.accessories.map((accessory) => (
+            <Accessory
+              key={accessory.type}
+              name={accessory.name}
+              icon={speedSvg}
+            />
+          ))}
+        </Accessories>
+        <About>{car.about}</About>
       </Content>
       <Footer>
-        <Button title='Escolher período do aluguel' onPress={handleConfirmRental} />
+        <Button
+          title="Escolher período do aluguel"
+          onPress={handleConfirmRental}
+        />
       </Footer>
     </Container>
   );
