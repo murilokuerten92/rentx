@@ -25,7 +25,8 @@ import {
 import { Button } from "../../components/Button";
 import { CarDTO } from "../../dtos/CarDTO";
 
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";interface Params {
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+interface Params {
   car: CarDTO;
 }
 
@@ -67,7 +68,7 @@ export function CarDetails() {
           </Description>
           <Rent>
             <Period>{car.rent.period}</Period>
-            <Price>{car.rent.price}</Price>
+            <Price>{`R$ ${car.rent.price}`}</Price>
           </Rent>
         </Details>
         <Accessories>

@@ -24,8 +24,7 @@ export type RootStackParamList = {
 export function Home() {
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [loading, setLoading] = useState(true);
-  const { navigate } =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   useEffect(() => {
     async function fetchCars() {
@@ -55,8 +54,7 @@ export function Home() {
       <Header>
         <HeaderContent>
           <Logo width={RFValue(108)} height={RFValue(12)} />
-
-          <TotalCars>Total de 12 carros</TotalCars>
+          <TotalCars>{`Total de ${cars.length} carros`}</TotalCars>
         </HeaderContent>
       </Header>
 
