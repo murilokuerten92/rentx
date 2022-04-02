@@ -43,7 +43,7 @@ import { useNavigation } from "@react-navigation/native";
 export function SchedulingDetails() {
   const theme = useTheme();
 
-  const { navigate } = useNavigation();
+  const { navigate, goBack } = useNavigation();
 
   function handleConfirmRental() {
     navigate("SchedulingComplete" as never);
@@ -52,7 +52,7 @@ export function SchedulingDetails() {
   return (
     <Container>
       <Header>
-        <BackButton onPress={() => {}} />
+        <BackButton onPress={() => goBack()} />
       </Header>
       <CarImages>
         <ImageSlider
