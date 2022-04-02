@@ -37,6 +37,8 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { CarDTO } from "../../dtos/CarDTO";
 import { getAccessoryIcon } from "../../utils/getAccessoryIcon";
 import { getPlatformDate } from "../../utils/getPlatformDate";
+import api from "../../services/api";
+import { Alert } from "react-native";
 
 export type RootStackParamList = {
   SchedulingDetails: { car: CarDTO; dates: string[] };
@@ -65,8 +67,20 @@ export function SchedulingDetails() {
 
   const rentTotal = Number(dates.length * car.rent.price);
 
-  function handleConfirmRental() {
-    navigate("SchedulingComplete" as never);
+  async function handleConfirmRental() {
+    const { data: schedulesByCar } = await api.get(
+      `/schedules_bycars/${car.id}`
+    );
+
+    const unavailable_dates = [...schedulesByCar.unavailable_dates, ...dates];
+
+    api
+      .put(`/schedules_bycars/${car.id}`, {
+        id: car.id,
+        unavailable_dates,
+      })
+      .then(() => navigate("SchedulingComplete" as never))
+      .catch(() => Alert.alert("It was not possible confirm schedulling"));
   }
 
   useEffect(() => {
@@ -96,7 +110,7 @@ export function SchedulingDetails() {
           </Description>
           <Rent>
             <Period>{car.rent.period}</Period>
-            <Price>{car.rent.price}</Price>
+            <Price>{`R$ ${car.rent.price}`}</Price>
           </Rent>
         </Details>
         <Accessories>
@@ -122,11 +136,11 @@ export function SchedulingDetails() {
             <DateValue>{rentalPeriod.start}</DateValue>
           </DateInfo>
 
-            <Feather
-              name="chevron-right"
-              size={RFValue(10)}
-              color={theme.colors.text}
-            />
+          <Feather
+            name="chevron-right"
+            size={RFValue(10)}
+            color={theme.colors.text}
+          />
 
           <DateInfo>
             <DateTitle>ATÉ</DateTitle>
@@ -137,7 +151,7 @@ export function SchedulingDetails() {
         <RentalPrice>
           <RentalPriceLabel>TOTAL</RentalPriceLabel>
           <RentalPriceDetails>
-            <RentalPriceQuota>{`R$ ${car.rent.price} x${dates.length} diárias`}</RentalPriceQuota>
+            <RentalPriceQuota>{`R$ ${car.rent.price} x ${dates.length} diárias`}</RentalPriceQuota>
             <RentalPriceTotal>{`R$ ${rentTotal}`}</RentalPriceTotal>
           </RentalPriceDetails>
         </RentalPrice>
