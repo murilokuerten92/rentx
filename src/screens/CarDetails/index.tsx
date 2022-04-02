@@ -25,19 +25,25 @@ import {
 import { Button } from "../../components/Button";
 import { CarDTO } from "../../dtos/CarDTO";
 
-interface Params {
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";interface Params {
   car: CarDTO;
 }
 
+export type RootStackParamList = {
+  Schedulling: { car: CarDTO };
+};
+
 export function CarDetails() {
-  const { navigate, goBack } = useNavigation();
+  const { navigate, goBack } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const route = useRoute();
 
   const { car } = route.params as Params;
 
   function handleConfirmRental() {
-    navigate("Schedulling" as never);
+    navigate("Schedulling",{
+      car
+    });
   }
 
   function handleBack() {
