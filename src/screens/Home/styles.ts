@@ -29,3 +29,19 @@ export const TotalCars = styled.Text`
   font-size: ${RFValue(15)}px;
 `;
 
+export const MyCarsButton = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.8
+})`
+  width: 60px;
+  height: 60px;
+
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 30px;
+  position: absolute;
+  bottom: 13px;
+  right: 22px;
+
+  background-color: ${({theme}) => theme.colors.main};
+`;

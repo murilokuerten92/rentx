@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 
 import { StatusBar } from "expo-status-bar";
-import { Container, Header, TotalCars, HeaderContent } from "./styles";
+import {
+  Container,
+  Header,
+  TotalCars,
+  HeaderContent,
+  MyCarsButton,
+} from "./styles";
 
 import Logo from "../../assets/logo.svg";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -14,8 +20,10 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import api from "../../services/api";
 import { CarDTO } from "../../dtos/CarDTO";
+import { useTheme } from "styled-components";
 
 import { Load } from "../../components/Load";
+import { Ionicons } from "@expo/vector-icons";
 
 export type RootStackParamList = {
   CarDetails: { car: CarDTO };
@@ -24,7 +32,9 @@ export type RootStackParamList = {
 export function Home() {
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [loading, setLoading] = useState(true);
-  const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const { navigate } =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const theme = useTheme();
 
   useEffect(() => {
     async function fetchCars() {
@@ -46,6 +56,10 @@ export function Home() {
     navigate("CarDetails", {
       car,
     });
+  }
+
+  function handleOpenMyCars() {
+    navigate("MyCars" as never);
   }
 
   return (
@@ -73,6 +87,10 @@ export function Home() {
           showsVerticalScrollIndicator={false}
         />
       )}
+
+      <MyCarsButton onPress={handleOpenMyCars}>
+        <Ionicons name="ios-car-sport" size={32} color={theme.colors.shape} />
+      </MyCarsButton>
     </Container>
   );
 }
