@@ -17,7 +17,7 @@ import { CarDTO} from '../../dtos/CarDTO';
 import { getAccessoryIcon } from "../../utils/getAccessoryIcon";
 interface Props {
   data: CarDTO;
-  onPress: () => void;
+  onPress?: () => void;
 }
 
 export function Car({ data, ...rest }: Props) {
