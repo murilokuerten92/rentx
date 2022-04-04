@@ -7,7 +7,7 @@ import { CarDetails } from '../screens/CarDetails';
 import { Schedulling } from '../screens/Schedulling';
 import { SchedulingDetails } from '../screens/SchedulingDetails';
 import { SchedulingComplete } from '../screens/SchedulingComplete';
-import { Mycars } from '../components/Mycars';
+import { Mycars } from '../screens/Mycars';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
