@@ -1,19 +1,22 @@
 
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
-interface ButtonProps {
+
+import { TouchableOpacityProps} from 'react-native';
+interface TouchableType extends TouchableOpacityProps {
     color?: string;
+    disabled?: boolean;
 }
 
-export const Container = styled.TouchableOpacity<ButtonProps>`
+export const Container = styled.TouchableOpacity<TouchableType>`
   width: 100%;
 
   padding: 19px;
   align-items: center;
   justify-content: center;
-
-  background-color: ${({ color }) => color };
-`;
+  opacity: ${props => props.disabled ? .5 : 1};
+  background-color: ${props => props.color ? props.color : props.theme.colors.main};
+  `;
 
 export const Title = styled.Text`
  font-family: ${({ theme }) => theme.fonts.primary_500};

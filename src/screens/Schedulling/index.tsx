@@ -24,7 +24,6 @@ import { StatusBar } from "expo-status-bar";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { format } from "date-fns";
 import { getPlatformDate } from "../../utils/getPlatformDate";
-import { Alert } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { CarDTO } from "../../dtos/CarDTO";
 interface RentalPeriod {
@@ -57,14 +56,11 @@ export function Schedulling() {
   const { car } = route.params as Params;
 
   function handleConfirmRental() {
-    if (!rentalPeriod.startFormatted || !rentalPeriod.endFormatted) {
-      Alert.alert("Selecione um período do aluguel");
-    } else {
+
       navigate("SchedulingDetails", {
         car,
         dates: Object.keys(markedDates)
       });
-    }
   }
 
   function handleChangeDate(date: DayProps) {
@@ -129,7 +125,7 @@ export function Schedulling() {
       </Content>
 
       <Footer>
-        <Button title="Confirmar" onPress={handleConfirmRental} />
+        <Button title="Confirmar" disabled={!(!!rentalPeriod.endFormatted)} onPress={handleConfirmRental} />
       </Footer>
     </Container>
   );
