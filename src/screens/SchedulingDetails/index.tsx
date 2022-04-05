@@ -55,6 +55,7 @@ interface Params {
 export function SchedulingDetails() {
   const theme = useTheme();
 
+  const [loading, setLoading] = useState(false);
   const { navigate, goBack } =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>(
@@ -68,6 +69,8 @@ export function SchedulingDetails() {
   const rentTotal = Number(dates.length * car.rent.price);
 
   async function handleConfirmRental() {
+    setLoading(true);
+
     const { data: schedulesByCar } = await api.get(
       `/schedules_bycars/${car.id}`
     );
@@ -80,7 +83,8 @@ export function SchedulingDetails() {
         unavailable_dates,
       })
       .then(() => navigate("SchedulingComplete" as never))
-      .catch(() => Alert.alert("It was not possible confirm schedulling"));
+      .catch(() => Alert.alert("It was not possible confirm schedulling"))
+      .finally(() => setLoading(false));
   }
 
   useEffect(() => {
@@ -161,6 +165,8 @@ export function SchedulingDetails() {
           title="Alugar agora"
           color={theme.colors.success}
           onPress={handleConfirmRental}
+          disabled={loading}
+          loading={loading}
         />
       </Footer>
     </Container>
