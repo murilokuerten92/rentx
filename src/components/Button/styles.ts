@@ -6,6 +6,7 @@ import { TouchableOpacityProps} from 'react-native';
 interface TouchableType extends TouchableOpacityProps {
     color?: string;
     disabled?: boolean;
+    loading?: boolean;
 }
 
 export const Container = styled.TouchableOpacity<TouchableType>`
@@ -14,7 +15,7 @@ export const Container = styled.TouchableOpacity<TouchableType>`
   padding: 19px;
   align-items: center;
   justify-content: center;
-  opacity: ${props => props.disabled ? .5 : 1};
+  opacity: ${props => props.disabled || props.loading ? .5 : 1};
   background-color: ${props => props.color ? props.color : props.theme.colors.main};
   `;
 
