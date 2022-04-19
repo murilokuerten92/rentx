@@ -4,9 +4,12 @@ import { RFValue } from 'react-native-responsive-fontsize';
 
 import { Platform } from 'react-native';
 
+import { PanGestureHandler, RectButton } from "react-native-gesture-handler";
+
 export const Container = styled.View`
   flex: 1;
   background-color: ${({ theme }) => Platform.OS === 'ios' ? theme.colors.background_secondary: theme.colors.shape};
+  position: relative;
 `;
 
 export const Header = styled.View`
@@ -29,19 +32,4 @@ export const TotalCars = styled.Text`
   font-size: ${RFValue(15)}px;
 `;
 
-export const MyCarsButton = styled.TouchableOpacity.attrs({
-  activeOpacity: 0.8
-})`
-  width: 60px;
-  height: 60px;
 
-  justify-content: center;
-  align-items: center;
-
-  border-radius: 30px;
-  position: absolute;
-  bottom: 13px;
-  right: 22px;
-
-  background-color: ${({theme}) => theme.colors.main};
-`;
