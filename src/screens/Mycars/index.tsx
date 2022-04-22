@@ -24,7 +24,7 @@ import { useTheme } from "styled-components";
 import { useNavigation } from "@react-navigation/native";
 import { FlatList } from "react-native";
 import { Car } from "../../components/Car";
-import { Load } from "../../components/Load";
+import { LoadAnimation } from "../../components/LoadAnimation";
 
 interface CarProps {
   car: CarDTO;
@@ -71,7 +71,7 @@ export function Mycars() {
       </Header>
 
       {loading ? (
-        <Load />
+        <LoadAnimation />
       ) : (
         <Content>
           <Appointments>
