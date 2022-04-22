@@ -27,7 +27,7 @@ import api from "../../services/api";
 import { CarDTO } from "../../dtos/CarDTO";
 import { useTheme } from "styled-components";
 
-import { Load } from "../../components/Load";
+import { LoadAnimation } from "../../components/LoadAnimation";
 import { Ionicons } from "@expo/vector-icons";
 
 export type RootStackParamList = {
@@ -107,14 +107,14 @@ export function Home() {
         <HeaderContent>
           <Logo width={RFValue(108)} height={RFValue(12)} />
           {!loading &&
-            <TotalCars>{`Total de ${cars?.length} carros`}</TotalCars>
+            <TotalCars>{`Total de ${cars.length} carros`}</TotalCars>
           }
           
         </HeaderContent>
       </Header>
 
       {loading ? (
-        <Load />
+        <LoadAnimation />
       ) : (
         <FlatList
           data={cars}
