@@ -10,6 +10,7 @@ interface ButtonProps {
   onPress: () => void;
   disabled?: boolean;
   loading?: boolean;
+  light?: boolean;
 }
 
 export function Button({
@@ -17,6 +18,7 @@ export function Button({
   color,
   loading = false,
   disabled = false,
+  light = false,
   ...rest
 }: ButtonProps) {
   const theme = useTheme();
