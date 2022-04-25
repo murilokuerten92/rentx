@@ -21,6 +21,7 @@ export const Container = styled.TouchableOpacity<TouchableType>`
   justify-content: center;
   opacity: ${props => props.disabled || props.loading ? .5 : 1};
   background-color: ${props => props.color ? props.color : props.theme.colors.main};
+  margin-bottom: 8px;
   `;
 
 export const Title = styled.Text<ButtonTextProps>`
