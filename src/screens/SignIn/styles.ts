@@ -29,3 +29,11 @@ export const SubTitle = styled.Text`
   line-height: ${RFValue(25)}px;
   margin-top: 16px;
 `;
+
+export const Footer = styled.View`
+
+`;
+
+export const Form = styled.View`
+
+`;
