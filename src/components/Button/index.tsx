@@ -25,7 +25,7 @@ export function Button({
 
   return (
     <Container {...rest} loading={loading} color={color} disabled={disabled}>
-      {loading ? <Load color={theme.colors.shape} /> : <Title>{title}</Title>}
+      {loading ? <Load color={theme.colors.shape} /> : <Title light={light}>{title}</Title>}
     </Container>
   );
 }
