@@ -6,6 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import { Button } from "../../components/Button";
 import { useTheme } from "styled-components";
 import { Input } from "../../components/Input";
+import { PasswordInput } from "../../components/PasswordInput";
 
 export function SignIn() {
   const theme = useTheme();
@@ -22,6 +23,7 @@ export function SignIn() {
       </Header>
       <Form>
         <Input iconName="mail" placeholder='E-mail' keyboardType='email-address' autoCorrect={false} autoCapitalize='none'  />
+        <PasswordInput iconName='lock' placeholder='Senha' secureTextEntry/>
       </Form>
       <Footer>
         <Button
