@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Container, Header, Title, SubTitle, Footer, Form } from "./styles";
 import {
@@ -14,6 +14,9 @@ import { PasswordInput } from "../../components/PasswordInput";
 
 export function SignIn() {
   const theme = useTheme();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
     <KeyboardAvoidingView behavior="position" enabled>
@@ -34,11 +37,15 @@ export function SignIn() {
               keyboardType="email-address"
               autoCorrect={false}
               autoCapitalize="none"
+              value={email}
+              onChangeText={setEmail}
             />
             <PasswordInput
               iconName="lock"
               placeholder="Senha"
               secureTextEntry
+              value={password}
+              onChangeText={setPassword}
             />
           </Form>
           <Footer>
