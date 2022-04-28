@@ -18,9 +18,8 @@ export function PasswordInput({ iconName, ...rest }: Props) {
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
 
-
-  function handlePasswordVisibilityChange(){
-     setIsPasswordVisible(prevState => !prevState);
+  function handlePasswordVisibilityChange() {
+    setIsPasswordVisible((prevState) => !prevState);
   }
 
   return (
@@ -32,7 +31,11 @@ export function PasswordInput({ iconName, ...rest }: Props) {
 
       <ChangePasswordVisibilityButton onPress={handlePasswordVisibilityChange}>
         <IconContainer>
-          <Feather  name={isPasswordVisible ? "eye" : 'eye-off'} size={24} color={theme.colors.text_detail}  />
+          <Feather
+            name={isPasswordVisible ? "eye" : "eye-off"}
+            size={24}
+            color={theme.colors.text_detail}
+          />
         </IconContainer>
       </ChangePasswordVisibilityButton>
     </Container>
