@@ -2,8 +2,7 @@
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
-import { TouchableOpacityProps} from 'react-native';
-interface TouchableType extends TouchableOpacityProps {
+interface TouchableType  {
     color?: string;
     disabled?: boolean;
     loading?: boolean;

@@ -4,10 +4,10 @@ import { Container, Title } from "./styles";
 
 import { Load } from "../Load";
 import { useTheme } from "styled-components";
-interface ButtonProps {
+import { TouchableOpacityProps } from "react-native";
+interface ButtonProps extends TouchableOpacityProps {
   title: string;
   color?: string;
-  onPress: () => void;
   disabled?: boolean;
   loading?: boolean;
   light?: boolean;
@@ -25,7 +25,11 @@ export function Button({
 
   return (
     <Container {...rest} loading={loading} color={color} disabled={disabled}>
-      {loading ? <Load color={theme.colors.shape} /> : <Title light={light}>{title}</Title>}
+      {loading ? (
+        <Load color={theme.colors.shape} />
+      ) : (
+        <Title light={light}>{title}</Title>
+      )}
     </Container>
   );
 }
