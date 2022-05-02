@@ -22,6 +22,28 @@ import { Button } from "../../../components/Button";
 export function SignUpFirstStep() {
   const { goBack, navigate } = useNavigation();
 
+  async function handleSignIn() {
+   try {
+     const schema = Yup.object().shape({
+       email: Yup.string()
+         .required("E-mail obrigatório")
+         .email("Digite um e-mail válido"),
+       password: Yup.string().required("A senha é obrigatória").min(6),
+     });
+
+     await schema.validate({ email, password });
+   } catch (error) {
+     if (error instanceof Yup.ValidationError) {
+       Alert.alert("Opa", error.message);
+     } else {
+       Alert.alert(
+         "Erro na autenticação",
+         "Ocorreu um erro ao fazer login, verifique as credenciais"
+       );
+     }
+   }
+ }
+
   function handleBack() {
     goBack();
   };
