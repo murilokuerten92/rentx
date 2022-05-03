@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { BackButton } from "../../../components/BackButton";
-import { NavigationHelpersContext, useNavigation } from "@react-navigation/native";
+import {
+  NavigationHelpersContext,
+  useNavigation,
+} from "@react-navigation/native";
 import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
 import {
   Container,
@@ -18,38 +22,69 @@ import {
 import { Bullet } from "../../../components/Bullet";
 import { Input } from "../../../components/Input";
 import { Button } from "../../../components/Button";
+import * as Yup from "yup";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
+export interface userRegisterDatas {
+  name: string;
+  email: string;
+  driverLicense: string;
+}
+
+export type RootStackParamList = {
+  SignUpSecondStep: { user: userRegisterDatas };
+};
 
 export function SignUpFirstStep() {
-  const { goBack, navigate } = useNavigation();
+  const { goBack, navigate } =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [driverLicense, setDriverLicense] = useState('');
 
   async function handleSignIn() {
-   try {
-     const schema = Yup.object().shape({
-       email: Yup.string()
-         .required("E-mail obrigatório")
-         .email("Digite um e-mail válido"),
-       password: Yup.string().required("A senha é obrigatória").min(6),
-     });
-
-     await schema.validate({ email, password });
-   } catch (error) {
-     if (error instanceof Yup.ValidationError) {
-       Alert.alert("Opa", error.message);
-     } else {
-       Alert.alert(
-         "Erro na autenticação",
-         "Ocorreu um erro ao fazer login, verifique as credenciais"
-       );
-     }
-   }
- }
+    try {
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        Alert.alert("Opa", error.message);
+      } else {
+        Alert.alert(
+          "Erro na autenticação",
+          "Ocorreu um erro ao fazer login, verifique as credenciais"
+        );
+      }
+    }
+  }
 
   function handleBack() {
     goBack();
-  };
+  }
 
-  function handleNextStep(){
-     navigate("SignUpSecondStep" as never);
+  async function handleNextStep() {
+    try {
+      const schema = Yup.object().shape({
+        name: Yup.string().required("Name é obrigatória"),
+        email: Yup.string()
+          .required("E-mail obrigatório")
+          .email("Digite inválido"),
+        driverLicense: Yup.string().required("CNH é obrigatória"),
+      });
+
+      const data = { name, email, driverLicense };
+
+      await schema.validate(data);
+
+      navigate("SignUpSecondStep", { user: data });
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        Alert.alert("Opa", error.message);
+      } else {
+        Alert.alert(
+          "Erro na ",
+          "Ocorreu um erro ao fazer login, verifique as credenciais"
+        );
+      }
+    }
   }
 
   return (
@@ -72,16 +107,26 @@ export function SignUpFirstStep() {
           <Form>
             <FormTitle>1. Dados</FormTitle>
 
-            <Input iconName="user" placeholder="Nome" />
+            <Input
+              iconName="user"
+              placeholder="Nome"
+              value={name}
+              onChangeText={setName}
+            />
             <Input
               iconName="mail"
               placeholder="E-mail"
               keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
             />
             <Input
               iconName="credit-card"
               placeholder="CNH"
               keyboardType="number-pad"
+            
+              onChangeText={setDriverLicense}
+              value={driverLicense}
             />
           </Form>
 

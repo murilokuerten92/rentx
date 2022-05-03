@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { BackButton } from "../../../components/BackButton";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
 import {
   Container,
@@ -18,14 +19,38 @@ import {
 import { Bullet } from "../../../components/Bullet";
 import { PasswordInput } from "../../../components/PasswordInput";
 import { Button } from "../../../components/Button";
-import { useTheme } from 'styled-components';
+import { useTheme } from "styled-components";
+import { userRegisterDatas } from "../SignUpFirstStep";
+
+interface Params {
+  user: userRegisterDatas;
+}
 
 export function SignUpSecondStep() {
   const { goBack } = useNavigation();
   const theme = useTheme();
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+
+  const route = useRoute();
+
+  const { user } = route.params as Params;
 
   function handleBack() {
     goBack();
+  }
+
+  function handleRegister() {
+    if (!password || !passwordConfirm) {
+      return Alert.alert("Informe a senha e a confirmação dela.");
+    };
+
+    if (password  !== passwordConfirm) {
+      return Alert.alert("As senha não são iguais.");
+    };
+
+    try {
+    } catch (error) {}
   }
 
   return (
@@ -48,11 +73,25 @@ export function SignUpSecondStep() {
           <Form>
             <FormTitle>2. Senha</FormTitle>
 
-            <PasswordInput iconName="lock" placeholder="Senha" />
-            <PasswordInput iconName="lock" placeholder="Repetir Senha" />
+            <PasswordInput
+              value={password}
+              onChangeText={setPassword}
+              iconName="lock"
+              placeholder="Senha"
+            />
+            <PasswordInput
+              value={passwordConfirm}
+              onChangeText={setPasswordConfirm}
+              iconName="lock"
+              placeholder="Repetir Senha"
+            />
           </Form>
 
-          <Button title="Cadastrar" color={theme.colors.success} />
+          <Button
+            title="Cadastrar"
+            color={theme.colors.success}
+            onPress={handleRegister}
+          />
         </Container>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
