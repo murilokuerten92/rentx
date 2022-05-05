@@ -21,13 +21,19 @@ import { PasswordInput } from "../../../components/PasswordInput";
 import { Button } from "../../../components/Button";
 import { useTheme } from "styled-components";
 import { userRegisterDatas } from "../SignUpFirstStep";
-
+import { Confirmation } from "../../Confirmation";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 interface Params {
   user: userRegisterDatas;
 }
 
+export type RootStackParamList = {
+  Confirmation: { title: string; message: string; nextScreenRoute: string };
+};
+
 export function SignUpSecondStep() {
-  const { goBack } = useNavigation();
+  const { goBack, navigate } =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const theme = useTheme();
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -43,12 +49,17 @@ export function SignUpSecondStep() {
   function handleRegister() {
     if (!password || !passwordConfirm) {
       return Alert.alert("Informe a senha e a confirmação dela.");
-    };
+    }
 
-    if (password  !== passwordConfirm) {
+    if (password !== passwordConfirm) {
       return Alert.alert("As senha não são iguais.");
-    };
+    }
 
+    navigate("Confirmation", {
+      nextScreenRoute: "SignIn",
+      title: "Conta Criada",
+      message: "Agora é só fazer login \n e aproveitar",
+    });
     try {
     } catch (error) {}
   }

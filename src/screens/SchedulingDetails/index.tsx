@@ -40,8 +40,8 @@ import { getPlatformDate } from "../../utils/getPlatformDate";
 import api from "../../services/api";
 import { Alert } from "react-native";
 
-export type RootStackParamList = {
-  SchedulingDetails: { car: CarDTO; dates: string[] };
+export type RootStackParamListConfirmation = {
+  Confirmation: { title: string; message: string; nextScreenRoute: string };
 };
 interface RentalPeriod {
   start: string;
@@ -57,7 +57,7 @@ export function SchedulingDetails() {
 
   const [loading, setLoading] = useState(false);
   const { navigate, goBack } =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    useNavigation<NativeStackNavigationProp<RootStackParamListConfirmation>>();
   const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>(
     {} as RentalPeriod
   );
@@ -82,7 +82,11 @@ export function SchedulingDetails() {
         id: car.id,
         unavailable_dates,
       })
-      .then(() => navigate("SchedulingComplete" as never))
+      .then(() => navigate("Confirmation", {
+        nextScreenRoute: "Home",
+        title: "Carro alugado!",
+        message: "Agora é só precisa ir \n até e concessionária da RENTX \n pegar o seu automóvel",
+      }))
       .catch(() => Alert.alert("It was not possible confirm schedulling"))
       .finally(() => setLoading(false));
   }
