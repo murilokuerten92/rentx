@@ -42,19 +42,6 @@ export function SignUpFirstStep() {
   const [email, setEmail] = useState("");
   const [driverLicense, setDriverLicense] = useState('');
 
-  async function handleSignIn() {
-    try {
-    } catch (error) {
-      if (error instanceof Yup.ValidationError) {
-        Alert.alert("Opa", error.message);
-      } else {
-        Alert.alert(
-          "Erro na autenticação",
-          "Ocorreu um erro ao fazer login, verifique as credenciais"
-        );
-      }
-    }
-  }
 
   function handleBack() {
     goBack();
