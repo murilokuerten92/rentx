@@ -23,6 +23,7 @@ import { useTheme } from "styled-components";
 import { userRegisterDatas } from "../SignUpFirstStep";
 import { Confirmation } from "../../Confirmation";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import api from "../../../services/api";
 interface Params {
   user: userRegisterDatas;
 }
@@ -46,7 +47,7 @@ export function SignUpSecondStep() {
     goBack();
   }
 
-  function handleRegister() {
+  async function handleRegister() {
     if (!password || !passwordConfirm) {
       return Alert.alert("Informe a senha e a confirmação dela.");
     }
@@ -55,13 +56,23 @@ export function SignUpSecondStep() {
       return Alert.alert("As senha não são iguais.");
     }
 
-    navigate("Confirmation", {
-      nextScreenRoute: "SignIn",
-      title: "Conta Criada",
-      message: "Agora é só fazer login \n e aproveitar",
-    });
-    try {
-    } catch (error) {}
+    await api
+      .post("users", {
+        user: user.name,
+        email: user.email,
+        driver_license: user.driverLicense,
+        password,
+      })
+      .then(() => {
+        navigate("Confirmation", {
+          nextScreenRoute: "SignIn",
+          title: "Conta Criada",
+          message: "Agora é só fazer login \n e aproveitar",
+        });
+      })
+      .catch(() => {
+        Alert.alert("Opa, Erro ao cadastrar usuário!");
+      });
   }
 
   return (
