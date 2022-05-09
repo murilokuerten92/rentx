@@ -55,10 +55,10 @@ export function SignUpSecondStep() {
     if (password !== passwordConfirm) {
       return Alert.alert("As senha não são iguais.");
     }
-
+console.log(user, password)
     await api
-      .post("users", {
-        user: user.name,
+      .post("/users", {
+        name: user.name,
         email: user.email,
         driver_license: user.driverLicense,
         password,
