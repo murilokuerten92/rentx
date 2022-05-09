@@ -99,7 +99,6 @@ export function SignUpFirstStep() {
               placeholder="Nome"
               value={name}
               onChangeText={setName}
-             autoCapitalize='sentences'
             />
             <Input
               iconName="mail"

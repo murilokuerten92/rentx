@@ -70,8 +70,7 @@ console.log(user, password)
           message: "Agora é só fazer login \n e aproveitar",
         });
       })
-      .catch(error => {
-        console.log(error)
+      .catch(() => {
         Alert.alert("Opa, Erro ao cadastrar usuário!");
       });
   }
