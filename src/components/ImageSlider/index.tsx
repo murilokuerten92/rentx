@@ -8,13 +8,16 @@ import {
   CarImage,
 } from "./styles";
 
-interface Props {
-  imagesUrl: string[];
-}
-
 interface ChangeImageProps {
   viewableItems: ViewToken[];
   changed: ViewToken[];
+}
+
+interface Props {
+  imagesUrl: {
+    id: string;
+    photo: string;
+  }[];
 }
 
 export function ImageSlider({ imagesUrl }: Props) {
@@ -29,20 +32,18 @@ export function ImageSlider({ imagesUrl }: Props) {
   return (
     <Container>
       <ImageIndexes>
-        {imagesUrl.map((_, index) => {
-          return (
-            <ImageIndex key={String(index)} active={index === imageIndex} />
-          );
-        })}
+        {imagesUrl.map((item, index) => (
+          <Bullet key={String(item.id)} active={index === imageIndex} />
+        ))}
       </ImageIndexes>
 
       <FlatList
         data={imagesUrl}
-        keyExtractor={(key) => key}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           return (
             <CarImageWrapper>
-              <CarImage source={{ uri: item }} resizeMode="contain" />
+              <CarImage source={{ uri: item.photo }} resizeMode="contain" />
             </CarImageWrapper>
           );
         }}
