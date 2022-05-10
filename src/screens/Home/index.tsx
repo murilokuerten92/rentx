@@ -48,7 +48,7 @@ export function Home() {
     navigate("CarDetails", {
       car,
     });
-  }
+  };
 
   return (
     <Container>
