@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Container, Header, Title, SubTitle, Footer, Form } from "./styles";
 import {
@@ -14,6 +14,7 @@ import { useTheme } from "styled-components";
 import { Input } from "../../components/Input";
 import { PasswordInput } from "../../components/PasswordInput";
 import { useAuth } from "../../hooks/auth";
+import { database } from "../../database";
 
 export function SignIn() {
   const theme = useTheme();
@@ -24,6 +25,15 @@ export function SignIn() {
   const [password, setPassword] = useState("");
 
   const { navigate } = useNavigation();
+
+  useEffect(() => {
+    (async () => {
+      const userCollection = database.get("users");
+      const users = await userCollection.query().fetch();
+
+      console.log(users);
+    })();
+  }, []);
 
   async function handleSignIn() {
     try {
