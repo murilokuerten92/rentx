@@ -14,7 +14,6 @@ import { useTheme } from "styled-components";
 import { Input } from "../../components/Input";
 import { PasswordInput } from "../../components/PasswordInput";
 import { useAuth } from "../../hooks/auth";
-import { database } from "../../database";
 
 export function SignIn() {
   const theme = useTheme();
@@ -25,15 +24,6 @@ export function SignIn() {
   const [password, setPassword] = useState("");
 
   const { navigate } = useNavigation();
-
-  useEffect(() => {
-    (async () => {
-      const userCollection = database.get("users");
-      const users = await userCollection.query().fetch();
-
-      console.log(users);
-    })();
-  }, []);
 
   async function handleSignIn() {
     try {
