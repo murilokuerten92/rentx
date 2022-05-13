@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode } from "react";
+import { database } from "../database";
 import api from "../services/api";
 
 interface User {
@@ -34,15 +35,25 @@ function AuthProvider({ children }: AuthProviderProps) {
   const [data, setData] = useState<AuthState>({} as AuthState);
 
   async function signIn({ email, password }: SignInCredentials) {
-    const response = await api.post("/sessions", {
-      email,
-      password,
-    });
+    try {
+      const response = await api.post("/sessions", {
+        email,
+        password,
+      });
 
-    const { token, user } = response.data;
-    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      const { token, user } = response.data;
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-    setData({ token, user });
+      const userCollection = database.get('users');
+
+      await database.(async () => {
+
+      })
+
+      setData({ token, user });
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
   return (
