@@ -17,7 +17,6 @@ import { CarDTO } from "../../dtos/CarDTO";
 
 import { LoadAnimation } from "../../components/LoadAnimation";
 
-
 export type RootStackParamList = {
   CarDetails: { car: CarDTO };
 };
@@ -29,26 +28,35 @@ export function Home() {
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   useEffect(() => {
+    let isMounted = true;
+
     async function fetchCars() {
       try {
         const response = await api.get("/cars");
-
-        setCars(response.data);
+        if (isMounted) {
+          setCars(response.data);
+        }
       } catch (error) {
         console.log(error);
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     }
 
     fetchCars();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   function handleCarDetails(car: CarDTO) {
     navigate("CarDetails", {
       car,
     });
-  };
+  }
 
   return (
     <Container>
@@ -56,10 +64,9 @@ export function Home() {
       <Header>
         <HeaderContent>
           <Logo width={RFValue(108)} height={RFValue(12)} />
-          {!loading &&
+          {!loading && (
             <TotalCars>{`Total de ${cars.length} carros`}</TotalCars>
-          }
-          
+          )}
         </HeaderContent>
       </Header>
 
@@ -78,8 +85,6 @@ export function Home() {
           showsVerticalScrollIndicator={false}
         />
       )}
-
-
     </Container>
   );
 }
