@@ -3,6 +3,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { Mycars } from "../screens/Mycars";
+import { Profile } from "../screens/Profile";
 import { Home } from "../screens/Home";
 import { AppStackRoutes } from "./app.stack.routes";
 import HomeSvg from "../assets/home.svg";
@@ -33,24 +34,30 @@ export function AppTabRoutes() {
     >
       <Screen
         options={{
-          tabBarIcon: ({ color }) => <HomeSvg width={24} height={24} fill={color} />,
+          tabBarIcon: ({ color }) => (
+            <HomeSvg width={24} height={24} fill={color} />
+          ),
         }}
         name="Home"
         component={AppStackRoutes}
       />
       <Screen
         options={{
-          tabBarIcon: ({ color }) => <CarSvg width={24} height={24} fill={color}  />,
-        }}
-        name="Profile"
-        component={Home}
-      />
-      <Screen
-        options={{
-          tabBarIcon: ({ color }) => <PeopleSvg width={24} height={24} fill={color}  />,
+          tabBarIcon: ({ color }) => (
+            <CarSvg width={24} height={24} fill={color} />
+          ),
         }}
         name="MyCars"
         component={Mycars}
+      />
+      <Screen
+        options={{
+          tabBarIcon: ({ color }) => (
+            <PeopleSvg width={24} height={24} fill={color} />
+          ),
+        }}
+        name="Profile"
+        component={Profile}
       />
     </Navigator>
   );
