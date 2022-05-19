@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Container,
@@ -8,7 +8,11 @@ import {
   LogoutButton,
   PhotoContainer,
   Photo,
-  PhotoButton
+  PhotoButton,
+  Content,
+  Options,
+  Option,
+  OptionTitle,
 } from "./styles";
 
 import { useTheme } from "styled-components";
@@ -17,6 +21,7 @@ import { BackButton } from "../../components/BackButton";
 import { useNavigation } from "@react-navigation/native";
 
 export function Profile() {
+  const [option, setOption] = useState<"dataEdit" | "passwordEdit">("dataEdit");
   const theme = useTheme();
 
   const { goBack } = useNavigation();
@@ -26,6 +31,10 @@ export function Profile() {
   }
 
   function handleSignOut() {}
+
+  function handleOptionChange(optionSelected: "dataEdit" | "passwordEdit") {
+    setOption(optionSelected);
+  }
 
   return (
     <Container>
@@ -49,6 +58,24 @@ export function Profile() {
           </PhotoButton>
         </PhotoContainer>
       </Header>
+      <Content>
+        <Options>
+          <Option
+            active={option === "dataEdit"}
+            onPress={() => handleOptionChange("dataEdit")}
+          >
+            <OptionTitle active={option === "dataEdit"}>Dados</OptionTitle>
+          </Option>
+          <Option
+            active={option === "passwordEdit"}
+            onPress={() => handleOptionChange("passwordEdit")}
+          >
+            <OptionTitle active={option === "passwordEdit"}>
+              Trocar senha
+            </OptionTitle>
+          </Option>
+        </Options>
+      </Content>
     </Container>
   );
 }
