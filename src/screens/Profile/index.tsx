@@ -28,15 +28,15 @@ import { Input } from "../../components/Input";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { PasswordInput } from "../../components/PasswordInput";
 import { useAuth } from "../../hooks/auth";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 
 export function Profile() {
   const [option, setOption] = useState<"dataEdit" | "passwordEdit">("dataEdit");
   const theme = useTheme();
-  const { user } = useAuth();
-const [avatar, setAvatar] = useState(user.avatar);
-const [name, setName] = useState(user.name);
-const [driver_license, setDriverLicense] = useState(user.driver_license);
+  const { user, signOut } = useAuth();
+  const [avatar, setAvatar] = useState(user.avatar);
+  const [name, setName] = useState(user.name);
+  const [driver_license, setDriverLicense] = useState(user.driver_license);
 
   const { goBack } = useNavigation();
 
@@ -44,25 +44,23 @@ const [driver_license, setDriverLicense] = useState(user.driver_license);
     goBack();
   }
 
-  function handleSignOut() {}
-
   function handleOptionChange(optionSelected: "dataEdit" | "passwordEdit") {
     setOption(optionSelected);
-  };
+  }
 
-  async function handleAvatarSelect(){
+  async function handleAvatarSelect() {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 4]
+      aspect: [4, 4],
     });
 
-    if(result.cancelled){
-return;
+    if (result.cancelled) {
+      return;
     }
 
-    if(result.uri){
-setAvatar(result.uri);
+    if (result.uri) {
+      setAvatar(result.uri);
     }
   }
 
@@ -74,7 +72,7 @@ setAvatar(result.uri);
             <HeaderTop>
               <BackButton color={theme.colors.shape} onPress={handleBack} />
               <HeaderTitle>Editar Perfil</HeaderTitle>
-              <LogoutButton onPress={handleSignOut}>
+              <LogoutButton onPress={signOut}>
                 <Feather name="power" size={24} color={theme.colors.shape} />
               </LogoutButton>
             </HeaderTop>
@@ -110,8 +108,17 @@ setAvatar(result.uri);
 
             {option === "dataEdit" ? (
               <Section>
-                <Input defaultValue={user.name} iconName="user" placeholder="Nome" onChangeText={setName} />
-                <Input defaultValue={user.email} iconName="mail" editable={false} />
+                <Input
+                  defaultValue={user.name}
+                  iconName="user"
+                  placeholder="Nome"
+                  onChangeText={setName}
+                />
+                <Input
+                  defaultValue={user.email}
+                  iconName="mail"
+                  editable={false}
+                />
 
                 <Input
                   iconName="credit-card"
