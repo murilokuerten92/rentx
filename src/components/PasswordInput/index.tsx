@@ -39,7 +39,7 @@ export function PasswordInput({ iconName, value,  ...rest }: Props) {
       <IconContainer isFocused={isFocused}> 
         <Feather name={iconName} size={24} color={isFocused || isFilled ? theme.colors.main : theme.colors.text_detail} />
       </IconContainer>
-      <InputText isFocused={isFocused} {...rest} secureTextEntry={isPasswordVisible} onFocus={handleInputFocus} onBlur={handleInputBlur} />
+      <InputText autoCorrect={false}  isFocused={isFocused} {...rest} secureTextEntry={isPasswordVisible} onFocus={handleInputFocus} onBlur={handleInputBlur} />
 
       <ChangePasswordVisibilityButton onPress={handlePasswordVisibilityChange}>
         <IconContainer isFocused={isFocused}>
