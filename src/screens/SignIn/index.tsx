@@ -53,6 +53,8 @@ export function SignIn() {
     navigate("SignUpFirstStep" as never);
   }
 
+
+
   return (
     <KeyboardAvoidingView behavior="position" enabled>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
