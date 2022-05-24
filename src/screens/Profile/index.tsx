@@ -88,7 +88,7 @@ export function Profile() {
         token: user.token,
       });
 
-      Alert.alert('Perfil atualizado');
+      Alert.alert("Perfil atualizado");
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         Alert.alert("opa.", error.message);
@@ -96,6 +96,23 @@ export function Profile() {
         Alert.alert("Não foi possível atualizar o perfil.");
       }
     }
+  }
+
+  async function handleSignOut() {
+    Alert.alert(
+      "Tem certeza?",
+      "Se você sair, irá precisar de internet para conectar-se novamente",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => {},
+        },
+        {
+          text: "Sair",
+          onPress: () => signOut(),
+        },
+      ]
+    );
   }
 
   return (
@@ -106,7 +123,7 @@ export function Profile() {
             <HeaderTop>
               <BackButton color={theme.colors.shape} onPress={handleBack} />
               <HeaderTitle>Editar Perfil</HeaderTitle>
-              <LogoutButton onPress={signOut}>
+              <LogoutButton onPress={handleSignOut}>
                 <Feather name="power" size={24} color={theme.colors.shape} />
               </LogoutButton>
             </HeaderTop>
