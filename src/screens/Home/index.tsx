@@ -6,11 +6,12 @@ import { Container, Header, TotalCars, HeaderContent } from "./styles";
 import Logo from "../../assets/logo.svg";
 import { RFValue } from "react-native-responsive-fontsize";
 
-import { FlatList, StyleSheet } from "react-native";
+import { Alert, FlatList, StyleSheet } from "react-native";
 
 import { Car } from "../../components/Car";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useNetInfo } from "@react-native-community/netinfo";
 
 import api from "../../services/api";
 import { CarDTO } from "../../dtos/CarDTO";
@@ -24,6 +25,7 @@ export type RootStackParamList = {
 export function Home() {
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [loading, setLoading] = useState(true);
+  const netInfo = useNetInfo();
   const { navigate } =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -57,6 +59,14 @@ export function Home() {
       car,
     });
   }
+
+  useEffect(() => {
+    if (netInfo.isConnected) {
+      Alert.alert("Você está On-Line");
+    } else {
+      Alert.alert("Você está Of-Line");
+    }
+  }, [netInfo.isConnected]);
 
   return (
     <Container>
