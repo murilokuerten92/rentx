@@ -39,6 +39,7 @@ import { getAccessoryIcon } from "../../utils/getAccessoryIcon";
 import { getPlatformDate } from "../../utils/getPlatformDate";
 import api from "../../services/api";
 import { Alert } from "react-native";
+import { useNetInfo } from "@react-native-community/netinfo";
 
 export type RootStackParamListConfirmation = {
   Confirmation: { title: string; message: string; nextScreenRoute: string };
@@ -54,7 +55,8 @@ interface Params {
 
 export function SchedulingDetails() {
   const theme = useTheme();
-
+  const [carUpdated, setCarUpdated] = useState<CarDTO>({} as CarDTO);
+  const netInfo = useNetInfo();
   const [loading, setLoading] = useState(false);
   const { navigate, goBack } =
     useNavigation<NativeStackNavigationProp<RootStackParamListConfirmation>>();
@@ -66,7 +68,7 @@ export function SchedulingDetails() {
 
   const { car, dates } = route.params as Params;
 
-  const rentTotal = Number(dates.length * car.rent.price);
+  const rentTotal = Number(dates.length * car.price);
 
   async function handleConfirmRental() {
     setLoading(true);
@@ -82,11 +84,14 @@ export function SchedulingDetails() {
         id: car.id,
         unavailable_dates,
       })
-      .then(() => navigate("Confirmation", {
-        nextScreenRoute: "Home",
-        title: "Carro alugado!",
-        message: "Agora é só precisa ir \n até e concessionária da RENTX \n pegar o seu automóvel",
-      }))
+      .then(() =>
+        navigate("Confirmation", {
+          nextScreenRoute: "Home",
+          title: "Carro alugado!",
+          message:
+            "Agora é só precisa ir \n até e concessionária da RENTX \n pegar o seu automóvel",
+        })
+      )
       .catch(() => Alert.alert("It was not possible confirm schedulling"))
       .finally(() => setLoading(false));
   }
@@ -101,13 +106,28 @@ export function SchedulingDetails() {
     });
   }, []);
 
+  useEffect(() => {
+    if (netInfo.isConnected === true) {
+      (async () => {
+        const response = await api.get(`/cars/${car.id}`);
+        setCarUpdated(response.data);
+      })();
+    }
+  }, [netInfo.isConnected]);
+
   return (
     <Container>
       <Header>
         <BackButton onPress={() => goBack()} />
       </Header>
       <CarImages>
-        <ImageSlider imagesUrl={car.photos} />
+      <ImageSlider
+            imagesUrl={
+              !!carUpdated.photos
+                ? carUpdated.photos
+                : [{ id: car.thumbnail, photo: car.thumbnail }]
+            }
+          />
       </CarImages>
 
       <Content>
@@ -121,15 +141,17 @@ export function SchedulingDetails() {
             <Price>{`R$ ${car.price}`}</Price>
           </Rent>
         </Details>
-        <Accessories>
-          {car.accessories.map((accessory) => (
-            <Accessory
-              key={accessory.type}
-              name={accessory.name}
-              icon={getAccessoryIcon(accessory.type)}
-            />
-          ))}
-        </Accessories>
+        {carUpdated.accessories && (
+          <Accessories>
+            {carUpdated.accessories.map((accessory) => (
+              <Accessory
+                key={accessory.type}
+                name={accessory.name}
+                icon={getAccessoryIcon(accessory.type)}
+              />
+            ))}
+          </Accessories>
+        )}
         <RentalPeriod>
           <CalendarIcon>
             <Feather
