@@ -21,7 +21,7 @@ import {
   CarFooterDate,
 } from "./styles";
 import { useTheme } from "styled-components";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { FlatList } from "react-native";
 import { Car } from "../../components/Car";
 import { Car as ModelCar } from "../../database/model/Car";
@@ -46,6 +46,7 @@ interface DataProps {
 export function Mycars() {
   const [cars, setCars] = useState<DataProps[]>();
   const [loading, setLoading] = useState(true);
+  const screenIsFocus = useIsFocused();
   const { goBack } = useNavigation();
   const theme = useTheme();
 
@@ -55,6 +56,7 @@ export function Mycars() {
         const response = await api.get("/rentals");
         const dataFormatted = response.data.map((data: DataProps) => {
           return {
+            id: data.id,
             car: data.car,
             start_date: format(parseISO(data.start_date), "dd/MM/yyyy"),
             end_date: format(parseISO(data.end_date), "dd/MM/yyyy"),
@@ -69,7 +71,7 @@ export function Mycars() {
     }
 
     fetchCars();
-  }, []);
+  }, [screenIsFocus]);
 
   return (
     <Container>
