@@ -25,7 +25,7 @@ export type RootStackParamList = {
 };
 
 export function Home() {
-  const [cars, setCars] = useState<CarDTO[]>([]);
+  const [cars, setCars] = useState<ModelCar[]>([]);
   const [loading, setLoading] = useState(true);
   const netInfo = useNetInfo();
   const { navigate } =
