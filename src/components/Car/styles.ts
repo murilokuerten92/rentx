@@ -1,5 +1,6 @@
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
+import FastImage from 'react-native-fast-image';
 
 export const Container = styled.TouchableOpacity.attrs({
   activeOpacity: 0.8
@@ -60,7 +61,7 @@ export const Price = styled.Text`
 
 export const Type = styled.View``
 
-export const CardImage= styled.Image`
+export const CardImage= styled(FastImage)`
   width: 167px;
   height: 85px;
 `
